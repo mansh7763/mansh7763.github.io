@@ -8,7 +8,7 @@
 ![CSS](https://img.shields.io/badge/CSS-3-blue)
 ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
 
-**🌐 [View Live Portfolio](https://your-username.github.io)**
+**🌐 [View Live Portfolio](https://mansh7763.github.io)**
 
 *A modern, interactive portfolio showcasing AI/ML projects, research, and professional experience*
 
@@ -135,7 +135,6 @@ GitHub • Supabase • CUDA • Docker • Jupyter
 <div align="center">
 
 [![Email](https://img.shields.io/badge/Email-himanshukumariiitn@gmail.com-red?style=for-the-badge&logo=gmail)](mailto:himanshukumariiitn@gmail.com)
-[![Phone](https://img.shields.io/badge/Phone-%2B91--7763855036-green?style=for-the-badge&logo=phone)](tel:+917763855036)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=for-the-badge&logo=linkedin)](https://linkedin.com/in/himanshu-kumar035)
 [![GitHub](https://img.shields.io/badge/GitHub-Follow-black?style=for-the-badge&logo=github)](https://github.com/mansh7763)
 [![Scholar](https://img.shields.io/badge/Google%20Scholar-Citations-blue?style=for-the-badge&logo=google-scholar)](https://scholar.google.com/citations?hl=en&user=rGWybRUAAAAJ)
