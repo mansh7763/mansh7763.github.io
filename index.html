@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Himanshu Kumar — AI Researcher</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <title>Himanshu Kumar — AI Researcher & ML Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -16,13 +16,18 @@
             --paper: #f8f7f3;
             --paper-2: #eeede7;
             --paper-3: #e4e3db;
-            --red: #c0392b;
-            --red-pale: #f9ebe9;
+            --accent: #c0392b;
+            --accent-pale: #f9ebe9;
+            --accent-dark: #962d22;
             --blue: #1a3a5c;
             --line: rgba(26,26,24,0.1);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 16px rgba(0,0,0,0.06);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.08);
             --serif: 'Lora', Georgia, serif;
             --sans: 'DM Sans', system-ui, sans-serif;
             --mono: 'DM Mono', monospace;
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         html { scroll-behavior: smooth; font-size: 16px; }
@@ -40,332 +45,417 @@
         /* ── NAV ── */
         nav {
             position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-            background: rgba(248,247,243,0.92);
-            backdrop-filter: blur(12px);
+            background: rgba(248,247,243,0.88);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--line);
+            transition: box-shadow var(--transition);
         }
+        nav.scrolled { box-shadow: 0 1px 8px rgba(0,0,0,0.06); }
+
         .nav-inner {
-            max-width: 900px; margin: 0 auto;
+            max-width: 960px; margin: 0 auto;
             display: flex; justify-content: space-between; align-items: center;
             padding: 0 2rem; height: 56px;
         }
         .nav-name {
-            font-family: var(--serif); font-size: 1rem; font-weight: 500; color: var(--ink);
+            font-family: var(--serif); font-size: 1rem; font-weight: 600; color: var(--ink);
             letter-spacing: 0.01em;
         }
-        .nav-links { display: flex; gap: 2rem; }
+        .nav-links { display: flex; gap: 1.8rem; align-items: center; }
         .nav-links a {
-            font-size: 0.82rem; font-weight: 500; color: var(--ink-3);
+            font-size: 0.8rem; font-weight: 500; color: var(--ink-3);
             letter-spacing: 0.05em; text-transform: uppercase;
-            transition: color 0.2s;
+            transition: color var(--transition);
+            position: relative;
         }
-        .nav-links a:hover { color: var(--red); }
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+            height: 1.5px; background: var(--accent); transform: scaleX(0);
+            transition: transform var(--transition);
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-links a:hover::after { transform: scaleX(1); }
+
+        .nav-resume-btn {
+            padding: 0.4rem 1rem; font-size: 0.78rem; font-weight: 500;
+            border: 1.5px solid var(--accent); border-radius: 3px;
+            color: var(--accent); letter-spacing: 0.04em; text-transform: uppercase;
+            transition: all var(--transition);
+        }
+        .nav-resume-btn:hover {
+            background: var(--accent); color: white;
+        }
+        .nav-resume-btn::after { display: none; }
+
+        /* Mobile menu */
+        .nav-toggle {
+            display: none; background: none; border: none; cursor: pointer;
+            width: 28px; height: 20px; position: relative;
+        }
+        .nav-toggle span {
+            display: block; width: 100%; height: 2px; background: var(--ink);
+            position: absolute; left: 0; transition: all 0.3s;
+        }
+        .nav-toggle span:nth-child(1) { top: 0; }
+        .nav-toggle span:nth-child(2) { top: 9px; }
+        .nav-toggle span:nth-child(3) { top: 18px; }
 
         /* ── LAYOUT ── */
-        main { max-width: 900px; margin: 0 auto; padding: 0 2rem; }
-
-        section { padding: 6rem 0; border-bottom: 1px solid var(--line); }
+        main { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+        section { padding: 5rem 0; border-bottom: 1px solid var(--line); }
         section:last-child { border-bottom: none; }
 
         /* ── HERO ── */
         #hero {
             padding-top: 9rem;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
             align-items: start;
         }
-        .hero-left {}
         .hero-label {
-            font-family: var(--mono); font-size: 0.78rem; color: var(--red);
-            letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1.2rem;
+            font-family: var(--mono); font-size: 0.78rem; color: var(--accent);
+            letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 1rem;
         }
         .hero-name {
-            font-family: var(--serif); font-size: 2.8rem; font-weight: 500;
-            line-height: 1.15; color: var(--ink); margin-bottom: 0.5rem;
+            font-family: var(--serif); font-size: 2.8rem; font-weight: 600;
+            line-height: 1.12; color: var(--ink); margin-bottom: 0.4rem;
         }
         .hero-title {
-            font-family: var(--serif); font-style: italic; font-size: 1.1rem;
-            color: var(--ink-3); margin-bottom: 1.8rem;
+            font-family: var(--serif); font-style: italic; font-size: 1.05rem;
+            color: var(--ink-3); margin-bottom: 1.6rem;
         }
         .hero-bio {
-            font-size: 0.97rem; color: var(--ink-2); line-height: 1.75;
-            max-width: 42ch;
+            font-size: 0.95rem; color: var(--ink-2); line-height: 1.75;
+            max-width: 44ch;
+        }
+        .interests {
+            display: flex; flex-wrap: wrap; gap: 0.45rem; margin-top: 1.8rem;
+        }
+        .interest-tag {
+            padding: 0.3rem 0.75rem;
+            font-size: 0.78rem; font-weight: 500;
+            background: var(--paper-2); border: 1px solid var(--paper-3);
+            border-radius: 2px; color: var(--ink-2);
+            transition: all var(--transition);
+        }
+        .interest-tag:hover {
+            border-color: var(--accent); color: var(--accent);
+            background: var(--accent-pale);
         }
 
-        .hero-right {}
         .quick-stat {
             background: var(--paper-2);
             border: 1px solid var(--line);
-            border-radius: 4px; padding: 1.5rem;
+            border-radius: 6px; padding: 1.4rem 1.6rem;
             margin-bottom: 1rem;
         }
-        .stat-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.6rem; }
+        .stat-row {
+            display: flex; justify-content: space-between; align-items: baseline;
+            margin-bottom: 0.55rem;
+        }
         .stat-row:last-child { margin-bottom: 0; }
-        .stat-key { font-size: 0.8rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; }
-        .stat-val { font-family: var(--serif); font-size: 1.2rem; font-weight: 500; color: var(--ink); }
+        .stat-key { font-size: 0.78rem; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.05em; }
+        .stat-val { font-family: var(--serif); font-size: 1.15rem; font-weight: 500; color: var(--ink); }
 
-        .hero-links { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.2rem; }
+        .hero-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
         .hero-link {
             display: inline-flex; align-items: center; gap: 0.4rem;
-            padding: 0.5rem 1rem;
-            font-size: 0.82rem; font-weight: 500;
+            padding: 0.45rem 0.9rem;
+            font-size: 0.8rem; font-weight: 500;
             border: 1px solid var(--ink);
-            border-radius: 2px;
-            color: var(--ink);
-            transition: background 0.15s, color 0.15s;
+            border-radius: 3px; color: var(--ink);
+            transition: all var(--transition);
         }
         .hero-link:hover { background: var(--ink); color: var(--paper); }
         .hero-link svg { width: 14px; height: 14px; flex-shrink: 0; }
 
         /* ── SECTION HEADERS ── */
-        .sec-header { margin-bottom: 3rem; }
+        .sec-header { margin-bottom: 2.5rem; }
         .sec-label {
-            font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.12em;
-            text-transform: uppercase; color: var(--red); margin-bottom: 0.5rem;
+            font-family: var(--mono); font-size: 0.73rem; letter-spacing: 0.12em;
+            text-transform: uppercase; color: var(--accent); margin-bottom: 0.4rem;
         }
         .sec-title {
-            font-family: var(--serif); font-size: 1.8rem; font-weight: 500; color: var(--ink);
+            font-family: var(--serif); font-size: 1.7rem; font-weight: 500; color: var(--ink);
             line-height: 1.2;
         }
 
-        /* ── RESEARCH INTERESTS ── */
-        .interests {
-            display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem;
-        }
-        .interest-tag {
-            padding: 0.35rem 0.85rem;
-            font-size: 0.8rem; font-weight: 500;
-            background: var(--paper-2); border: 1px solid var(--paper-3);
-            border-radius: 2px; color: var(--ink-2);
-        }
-
         /* ── PUBLICATIONS ── */
-        .pub-list { display: flex; flex-direction: column; gap: 2.5rem; }
-
+        .pub-list { display: flex; flex-direction: column; gap: 2rem; }
         .pub-card {
-            display: grid; grid-template-columns: auto 1fr; gap: 0 2rem;
-            padding: 2rem; background: var(--paper-2);
-            border: 1px solid var(--line); border-left: 3px solid var(--red);
-            border-radius: 0 4px 4px 0;
-            transition: box-shadow 0.2s;
+            display: grid; grid-template-columns: auto 1fr; gap: 0 1.8rem;
+            padding: 1.8rem; background: var(--paper-2);
+            border: 1px solid var(--line); border-left: 3px solid var(--accent);
+            border-radius: 0 6px 6px 0;
+            transition: box-shadow var(--transition), transform var(--transition);
         }
-        .pub-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
-
+        .pub-card:hover { box-shadow: var(--shadow-md); transform: translateY(-1px); }
         .pub-year {
-            font-family: var(--mono); font-size: 0.75rem; color: var(--red);
+            font-family: var(--mono); font-size: 0.75rem; color: var(--accent);
             font-weight: 500; padding-top: 0.15rem; min-width: 40px;
         }
-        .pub-body {}
         .pub-venue {
-            font-size: 0.78rem; font-weight: 500; text-transform: uppercase;
-            letter-spacing: 0.06em; color: var(--ink-3); margin-bottom: 0.5rem;
+            font-size: 0.76rem; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.06em; color: var(--ink-3); margin-bottom: 0.4rem;
         }
         .pub-title {
-            font-family: var(--serif); font-size: 1.1rem; font-weight: 500;
-            color: var(--ink); line-height: 1.4; margin-bottom: 0.4rem;
+            font-family: var(--serif); font-size: 1.05rem; font-weight: 500;
+            color: var(--ink); line-height: 1.4; margin-bottom: 0.35rem;
         }
-        .pub-authors {
-            font-size: 0.85rem; color: var(--ink-3); margin-bottom: 0.9rem;
-        }
+        .pub-authors { font-size: 0.84rem; color: var(--ink-3); margin-bottom: 0.8rem; }
         .pub-authors strong { color: var(--ink-2); }
         .pub-abstract {
-            font-size: 0.88rem; color: var(--ink-2); line-height: 1.7;
-            margin-bottom: 1.2rem;
+            font-size: 0.87rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 1rem;
         }
         .pub-findings {
-            display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1.2rem;
+            display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem;
         }
         .pub-finding {
-            font-size: 0.84rem; color: var(--ink-2); line-height: 1.6;
+            font-size: 0.83rem; color: var(--ink-2); line-height: 1.6;
             padding-left: 1.1rem; position: relative;
         }
         .pub-finding::before {
-            content: '→'; position: absolute; left: 0; color: var(--red); font-size: 0.75rem;
+            content: '\2192'; position: absolute; left: 0; color: var(--accent); font-size: 0.75rem;
         }
-        .pub-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+        .pub-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
         .pub-btn {
             display: inline-flex; align-items: center; gap: 0.3rem;
-            padding: 0.3rem 0.8rem;
-            font-size: 0.78rem; font-weight: 500;
-            border: 1px solid var(--ink-4); border-radius: 2px;
-            color: var(--ink-2);
-            transition: border-color 0.15s, color 0.15s;
+            padding: 0.3rem 0.75rem;
+            font-size: 0.76rem; font-weight: 500;
+            border: 1px solid var(--ink-4); border-radius: 3px; color: var(--ink-2);
+            transition: all var(--transition);
         }
-        .pub-btn:hover { border-color: var(--red); color: var(--red); }
+        .pub-btn:hover { border-color: var(--accent); color: var(--accent); }
         .pub-btn svg { width: 12px; height: 12px; }
 
         /* ── EXPERIENCE ── */
         .exp-list { display: flex; flex-direction: column; }
-
         .exp-item {
             display: grid; grid-template-columns: 160px 1fr; gap: 0 2rem;
-            padding: 2rem 0; border-bottom: 1px solid var(--line);
+            padding: 1.8rem 0; border-bottom: 1px solid var(--line);
         }
         .exp-item:last-child { border-bottom: none; }
-
-        .exp-meta {}
         .exp-period {
-            font-family: var(--mono); font-size: 0.75rem; color: var(--ink-3);
-            line-height: 1.5; margin-bottom: 0.4rem;
+            font-family: var(--mono); font-size: 0.74rem; color: var(--ink-3);
+            line-height: 1.5; margin-bottom: 0.35rem;
         }
-        .exp-org {
-            font-size: 0.82rem; font-weight: 500; color: var(--ink-2);
-            line-height: 1.4;
-        }
-
-        .exp-body {}
+        .exp-org { font-size: 0.82rem; font-weight: 500; color: var(--ink-2); line-height: 1.4; }
         .exp-role {
-            font-family: var(--serif); font-size: 1.05rem; font-weight: 500;
-            color: var(--ink); margin-bottom: 0.8rem; line-height: 1.3;
+            font-family: var(--serif); font-size: 1.02rem; font-weight: 500;
+            color: var(--ink); margin-bottom: 0.7rem; line-height: 1.3;
         }
-        .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
+        .exp-points { list-style: none; display: flex; flex-direction: column; gap: 0.35rem; }
         .exp-points li {
-            font-size: 0.87rem; color: var(--ink-2); line-height: 1.65;
+            font-size: 0.86rem; color: var(--ink-2); line-height: 1.65;
             padding-left: 1.1rem; position: relative;
         }
         .exp-points li::before {
-            content: '–'; position: absolute; left: 0; color: var(--ink-4);
+            content: '\2013'; position: absolute; left: 0; color: var(--ink-4);
         }
 
         /* ── PROJECTS ── */
-        .proj-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
-        }
+        .proj-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
         .proj-card {
-            padding: 1.8rem; background: var(--paper-2);
-            border: 1px solid var(--line); border-radius: 4px;
-            transition: border-color 0.2s, box-shadow 0.2s;
+            padding: 1.6rem; background: var(--paper-2);
+            border: 1px solid var(--line); border-radius: 6px;
+            transition: all var(--transition);
+            display: flex; flex-direction: column;
         }
-        .proj-card:hover { border-color: var(--ink-3); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+        .proj-card:hover {
+            border-color: var(--ink-4); box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
         .proj-title {
-            font-family: var(--serif); font-size: 1rem; font-weight: 500;
-            color: var(--ink); margin-bottom: 0.6rem; line-height: 1.35;
+            font-family: var(--serif); font-size: 0.98rem; font-weight: 500;
+            color: var(--ink); margin-bottom: 0.5rem; line-height: 1.35;
         }
-        .proj-desc { font-size: 0.84rem; color: var(--ink-2); line-height: 1.65; margin-bottom: 1rem; }
-        .proj-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem; }
+        .proj-desc { font-size: 0.83rem; color: var(--ink-2); line-height: 1.65; margin-bottom: 0.9rem; flex: 1; }
+        .proj-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 0.9rem; }
         .proj-tag {
-            font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3);
-            padding: 0.2rem 0.5rem; background: var(--paper-3); border-radius: 2px;
+            font-family: var(--mono); font-size: 0.7rem; color: var(--ink-3);
+            padding: 0.18rem 0.45rem; background: var(--paper-3); border-radius: 2px;
         }
         .proj-link {
-            font-size: 0.8rem; font-weight: 500; color: var(--red);
+            font-size: 0.79rem; font-weight: 500; color: var(--accent);
             display: inline-flex; align-items: center; gap: 0.3rem;
-            transition: opacity 0.15s;
+            transition: opacity var(--transition);
         }
         .proj-link:hover { opacity: 0.7; }
         .proj-link svg { width: 12px; height: 12px; }
 
         /* ── SKILLS ── */
-        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-        .skill-group {}
+        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
         .skill-group-title {
-            font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
-            text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.8rem;
-            padding-bottom: 0.5rem; border-bottom: 1px solid var(--line);
+            font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.7rem;
+            padding-bottom: 0.4rem; border-bottom: 1px solid var(--line);
         }
-        .skill-items { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+        .skill-items { display: flex; flex-wrap: wrap; gap: 0.3rem; }
         .skill-item {
-            font-size: 0.82rem; color: var(--ink-2); padding: 0.25rem 0.6rem;
-            background: var(--paper-2); border: 1px solid var(--line); border-radius: 2px;
+            font-size: 0.8rem; color: var(--ink-2); padding: 0.22rem 0.55rem;
+            background: var(--paper-2); border: 1px solid var(--line); border-radius: 3px;
+            transition: all var(--transition);
         }
+        .skill-item:hover { border-color: var(--accent); color: var(--accent); }
 
         /* ── AWARDS ── */
-        .award-list { display: flex; flex-direction: column; gap: 1rem; }
+        .award-list { display: flex; flex-direction: column; gap: 0.8rem; }
         .award-item {
             display: grid; grid-template-columns: 160px 1fr;
-            gap: 0 2rem; padding: 1.2rem 0; border-bottom: 1px solid var(--line);
+            gap: 0 2rem; padding: 1rem 0; border-bottom: 1px solid var(--line);
         }
         .award-item:last-child { border-bottom: none; }
-        .award-org { font-size: 0.8rem; color: var(--ink-3); font-weight: 500; }
-        .award-title { font-size: 0.92rem; font-weight: 500; color: var(--ink); margin-bottom: 0.2rem; }
-        .award-desc { font-size: 0.83rem; color: var(--ink-2); }
+        .award-org { font-size: 0.79rem; color: var(--ink-3); font-weight: 500; }
+        .award-title { font-size: 0.9rem; font-weight: 500; color: var(--ink); margin-bottom: 0.15rem; }
+        .award-desc { font-size: 0.82rem; color: var(--ink-2); }
+
+        /* ── RESUME ── */
+        .resume-section { text-align: center; }
+        .resume-actions {
+            display: flex; gap: 1rem; justify-content: center; margin-bottom: 2.5rem;
+        }
+        .resume-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.7rem 1.8rem;
+            font-size: 0.88rem; font-weight: 500;
+            border-radius: 4px;
+            transition: all var(--transition);
+        }
+        .resume-btn-primary {
+            background: var(--accent); color: white; border: 1.5px solid var(--accent);
+        }
+        .resume-btn-primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+        .resume-btn-secondary {
+            background: transparent; color: var(--ink); border: 1.5px solid var(--ink);
+        }
+        .resume-btn-secondary:hover { background: var(--ink); color: var(--paper); }
+        .resume-btn svg { width: 16px; height: 16px; }
+
+        .resume-embed {
+            width: 100%; height: 700px;
+            border: 1px solid var(--line); border-radius: 6px;
+            background: var(--paper-2);
+            box-shadow: var(--shadow-md);
+        }
 
         /* ── CONTACT ── */
-        #contact { padding-bottom: 8rem; }
+        #contact { padding-bottom: 6rem; }
         .contact-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start;
         }
         .contact-intro {
             font-family: var(--serif); font-style: italic;
-            font-size: 1.2rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 2rem;
+            font-size: 1.15rem; color: var(--ink-2); line-height: 1.7; margin-bottom: 1.8rem;
         }
-        .contact-links { display: flex; flex-direction: column; gap: 0.8rem; }
+        .contact-links { display: flex; flex-direction: column; gap: 0.7rem; }
         .contact-link {
             display: flex; align-items: center; gap: 0.7rem;
-            font-size: 0.9rem; color: var(--ink-2);
-            transition: color 0.15s;
+            font-size: 0.88rem; color: var(--ink-2);
+            transition: color var(--transition);
         }
-        .contact-link:hover { color: var(--red); }
+        .contact-link:hover { color: var(--accent); }
         .contact-link svg { width: 16px; height: 16px; flex-shrink: 0; color: var(--ink-3); }
 
-        .research-focus { padding: 1.8rem; background: var(--paper-2); border: 1px solid var(--line); border-radius: 4px; }
-        .rf-title {
-            font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.1em;
-            text-transform: uppercase; color: var(--ink-3); margin-bottom: 1rem;
+        .research-focus {
+            padding: 1.6rem; background: var(--paper-2);
+            border: 1px solid var(--line); border-radius: 6px;
         }
-        .rf-items { display: flex; flex-direction: column; gap: 0.6rem; }
-        .rf-item { font-size: 0.87rem; color: var(--ink-2); padding-left: 1rem; position: relative; }
-        .rf-item::before { content: '·'; position: absolute; left: 0; color: var(--red); font-size: 1.2rem; line-height: 0.9; }
+        .rf-title {
+            font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.1em;
+            text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.9rem;
+        }
+        .rf-items { display: flex; flex-direction: column; gap: 0.5rem; }
+        .rf-item {
+            font-size: 0.85rem; color: var(--ink-2); padding-left: 1rem; position: relative;
+        }
+        .rf-item::before {
+            content: '\00B7'; position: absolute; left: 0; color: var(--accent);
+            font-size: 1.2rem; line-height: 0.9;
+        }
 
         /* ── FOOTER ── */
         footer {
             border-top: 1px solid var(--line); padding: 2rem;
             text-align: center;
-            font-size: 0.8rem; color: var(--ink-4); letter-spacing: 0.03em;
+            font-size: 0.78rem; color: var(--ink-4); letter-spacing: 0.03em;
         }
+        footer a { color: var(--ink-3); transition: color var(--transition); }
+        footer a:hover { color: var(--accent); }
 
         /* ── SCROLL FADE ── */
         .fade-in {
-            opacity: 0; transform: translateY(18px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            opacity: 0; transform: translateY(16px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
         }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
         /* ── RESPONSIVE ── */
-        @media (max-width: 700px) {
-            #hero { grid-template-columns: 1fr; gap: 2rem; }
+        @media (max-width: 768px) {
+            main { padding: 0 1.2rem; }
+            #hero { grid-template-columns: 1fr; gap: 2rem; padding-top: 7rem; }
             .hero-name { font-size: 2rem; }
+            .hero-bio { max-width: none; }
             .pub-card { grid-template-columns: 1fr; }
-            .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+            .pub-year { margin-bottom: 0.3rem; }
+            .exp-item { grid-template-columns: 1fr; gap: 0.4rem; }
             .proj-grid { grid-template-columns: 1fr; }
             .skills-grid { grid-template-columns: 1fr; }
-            .contact-grid { grid-template-columns: 1fr; }
-            .award-item { grid-template-columns: 1fr; }
-            .nav-links { display: none; }
+            .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .award-item { grid-template-columns: 1fr; gap: 0.3rem; }
+            .resume-embed { height: 500px; }
+            .resume-actions { flex-direction: column; align-items: center; }
+            .nav-links {
+                display: none; flex-direction: column;
+                position: absolute; top: 56px; left: 0; right: 0;
+                background: rgba(248,247,243,0.97);
+                backdrop-filter: blur(16px);
+                padding: 1.5rem 2rem; gap: 1.2rem;
+                border-bottom: 1px solid var(--line);
+            }
+            .nav-links.open { display: flex; }
+            .nav-toggle { display: block; }
+            section { padding: 3.5rem 0; }
         }
     </style>
 </head>
 <body>
 
 <!-- NAV -->
-<nav>
+<nav id="navbar">
     <div class="nav-inner">
         <span class="nav-name">Himanshu Kumar</span>
+        <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
         <div class="nav-links">
             <a href="#research">Research</a>
             <a href="#experience">Experience</a>
             <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
             <a href="#contact">Contact</a>
+            <a href="#resume" class="nav-resume-btn">Resume</a>
         </div>
     </div>
 </nav>
 
 <main>
 
-    <!-- HERO -->
+    <!-- ═══════════════════ HERO ═══════════════════ -->
     <section id="hero">
         <div class="hero-left">
-            <p class="hero-label">AI Researcher & ML Scientist</p>
+            <p class="hero-label">ML Engineer & AI Researcher</p>
             <h1 class="hero-name">Himanshu Kumar</h1>
             <p class="hero-title">Final-year CS student, IIIT Nagpur</p>
             <p class="hero-bio">
-                I work at the intersection of multimodal learning, multilingual NLP, and mechanistic interpretability — building and understanding AI systems that operate across languages, modalities, and scales. Published at AAAI 2026 with research on representation geometry and efficient vision-language models.
+                I build and deploy end-to-end ML systems &mdash; from production RAG pipelines and multi-agent architectures to fine-tuned LLMs and vision-language models. My work spans applied engineering (FastAPI, vector databases, LangGraph) and research (published at AAAI 2026), bridging the gap between model development and real-world deployment.
             </p>
             <div class="interests">
-                <span class="interest-tag">Mechanistic Interpretability</span>
-                <span class="interest-tag">Multilingual NLP</span>
+                <span class="interest-tag">RAG Systems</span>
+                <span class="interest-tag">LLM Fine-Tuning</span>
+                <span class="interest-tag">Multi-Agent Systems</span>
                 <span class="interest-tag">Multimodal Learning</span>
-                <span class="interest-tag">Representation Geometry</span>
-                <span class="interest-tag">Low-Resource AI</span>
+                <span class="interest-tag">Multilingual NLP</span>
+                <span class="interest-tag">Mechanistic Interpretability</span>
                 <span class="interest-tag">Vision-Language Models</span>
             </div>
         </div>
@@ -388,12 +478,8 @@
                     <span class="stat-val">3</span>
                 </div>
                 <div class="stat-row">
-                    <span class="stat-key">Research Internships</span>
-                    <span class="stat-val">3</span>
-                </div>
-                <div class="stat-row">
-                    <span class="stat-key">NVIDIA Certifications</span>
-                    <span class="stat-val">5</span>
+                    <span class="stat-key">Internships</span>
+                    <span class="stat-val">4</span>
                 </div>
             </div>
             <div class="hero-links">
@@ -409,10 +495,6 @@
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/></svg>
                     Scholar
                 </a>
-                <a href="https://himanshukumar.vercel.app" class="hero-link" target="_blank">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-                    Portfolio
-                </a>
                 <a href="mailto:himanshukumariiitn@gmail.com" class="hero-link">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
                     Email
@@ -421,7 +503,7 @@
         </div>
     </section>
 
-    <!-- RESEARCH / PUBLICATIONS -->
+    <!-- ═══════════════════ RESEARCH ═══════════════════ -->
     <section id="research">
         <div class="sec-header fade-in">
             <p class="sec-label">Publications</p>
@@ -433,59 +515,9 @@
             <div class="pub-card fade-in">
                 <div class="pub-year">2026</div>
                 <div class="pub-body">
-                    <p class="pub-venue">LM4UC Workshop · AAAI 2026</p>
-                    <h3 class="pub-title">When Gujarati Meets English: Toward Robust Translation of Code-Mixed Low Resourced Indian Language</h3>
-                    <p class="pub-authors"><strong>Himanshu Kumar</strong> — First Author</p>
-                    <p class="pub-abstract">
-                        Created the first large-scale Gujlish–English parallel corpus addressing translation for millions of Gujarati speakers who naturally code-mix Gujarati with English. Fine-tuned NLLB-200 for Romanized Gujarati and intra-sentential code-mixing.
-                    </p>
-                    <div class="pub-findings">
-                        <p class="pub-finding">30K sentence pairs via BPCC + GPT-4o generation with human validation</p>
-                        <p class="pub-finding">1.5–2× BLEU and ChrF++ improvements over Google Translate</p>
-                        <p class="pub-finding">New Gujlish evaluation benchmarks adapted from XNLI and IN22</p>
-                    </div>
-                    <div class="pub-actions">
-                        <a href="https://openreview.net/pdf?id=2YnbMfsN2t" class="pub-btn" target="_blank">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                            Paper (OpenReview)
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pub-card fade-in">
-                <div class="pub-year">2025</div>
-                <div class="pub-body">
-                    <p class="pub-venue">arXiv Preprint</p>
-                    <h3 class="pub-title">NanoVLM: How Small Can Vision Language Models Be and Still Generate Coherent Text?</h3>
-                    <p class="pub-authors"><strong>Himanshu Kumar</strong> — First Author</p>
-                    <p class="pub-abstract">
-                        Systematically studied the lower bound of VLM scale for coherent image captioning. Designed a family of parameter-efficient vision-language models achieving 10× parameter reduction vs. standard VLMs, revealing that caption length matters more than parameter count for alignment.
-                    </p>
-                    <div class="pub-findings">
-                        <p class="pub-finding">NanoVLM (mini/base/large) with up to 10× parameter reduction</p>
-                        <p class="pub-finding">Curated ShortDesc (20–25w) and LongDesc (60–70w) minimal alignment datasets</p>
-                        <p class="pub-finding">New evaluation axes: creativity, consistency, semantic coherence</p>
-                    </div>
-                    <div class="pub-actions">
-                        <a href="https://arxiv.org/abs/2502.07838" class="pub-btn" target="_blank">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                            arXiv
-                        </a>
-                        <a href="https://github.com/mansh7763/NanoVLM-A-tiny-MultiModal-Vision-Language-Model" class="pub-btn" target="_blank">
-                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
-                            Code
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pub-card fade-in">
-                <div class="pub-year" style="color: var(--ink-3);">2025</div>
-                <div class="pub-body">
-                    <p class="pub-venue">Under Review · Vizuara AI Labs</p>
+                    <p class="pub-venue">Under Review &middot; Vizuara AI Labs</p>
                     <h3 class="pub-title">The Geometry of Entanglement: Bridging Representation Probing and Mechanistic Interpretability</h3>
-                    <p class="pub-authors"><strong>Himanshu Kumar</strong> — Primary Researcher</p>
+                    <p class="pub-authors"><strong>Himanshu Kumar</strong> &mdash; Primary Researcher</p>
                     <p class="pub-abstract">
                         Multi-scale investigation of how deep vision models implicitly encode attributes beyond their training objective, revealing a fundamental geometric asymmetry between task-relevant and implicitly encoded features.
                     </p>
@@ -503,55 +535,103 @@
                 </div>
             </div>
 
+            <div class="pub-card fade-in">
+                <div class="pub-year">2026</div>
+                <div class="pub-body">
+                    <p class="pub-venue">LM4UC Workshop &middot; AAAI 2026</p>
+                    <h3 class="pub-title">When Gujarati Meets English: Toward Robust Translation of Code-Mixed Low-Resource Indian Language</h3>
+                    <p class="pub-authors"><strong>Himanshu Kumar</strong> &mdash; First Author</p>
+                    <p class="pub-abstract">
+                        Created the first large-scale Gujlish&ndash;English parallel corpus addressing translation for millions of Gujarati speakers who naturally code-mix Gujarati with English. Fine-tuned NLLB-200 for Romanized Gujarati and intra-sentential code-mixing.
+                    </p>
+                    <div class="pub-findings">
+                        <p class="pub-finding">30K sentence pairs via BPCC + GPT-4o generation with human validation</p>
+                        <p class="pub-finding">1.5&ndash;2&times; BLEU and ChrF++ improvements over Google Translate</p>
+                        <p class="pub-finding">New Gujlish evaluation benchmarks adapted from XNLI and IN22</p>
+                    </div>
+                    <div class="pub-actions">
+                        <a href="https://openreview.net/pdf?id=2YnbMfsN2t" class="pub-btn" target="_blank">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            Paper (OpenReview)
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pub-card fade-in">
+                <div class="pub-year">2025</div>
+                <div class="pub-body">
+                    <p class="pub-venue">arXiv Preprint</p>
+                    <h3 class="pub-title">NanoVLM: How Small Can Vision Language Models Be and Still Generate Coherent Text?</h3>
+                    <p class="pub-authors"><strong>Himanshu Kumar</strong> &mdash; First Author</p>
+                    <p class="pub-abstract">
+                        Systematically studied the lower bound of VLM scale for coherent image captioning. Designed a family of parameter-efficient vision-language models achieving 10&times; parameter reduction vs. standard VLMs.
+                    </p>
+                    <div class="pub-findings">
+                        <p class="pub-finding">NanoVLM (mini/base/large) with up to 10&times; parameter reduction</p>
+                        <p class="pub-finding">Curated ShortDesc (20&ndash;25w) and LongDesc (60&ndash;70w) minimal alignment datasets</p>
+                        <p class="pub-finding">New evaluation axes: creativity, consistency, semantic coherence</p>
+                    </div>
+                    <div class="pub-actions">
+                        <a href="https://arxiv.org/abs/2502.07838" class="pub-btn" target="_blank">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                            arXiv
+                        </a>
+                        <a href="https://github.com/mansh7763/NanoVLM-A-tiny-MultiModal-Vision-Language-Model" class="pub-btn" target="_blank">
+                            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                            Code
+                        </a>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
-    <!-- EXPERIENCE -->
+    <!-- ═══════════════════ EXPERIENCE ═══════════════════ -->
     <section id="experience">
         <div class="sec-header fade-in">
             <p class="sec-label">Work Experience</p>
-            <h2 class="sec-title">Research & Industry</h2>
+            <h2 class="sec-title">Industry & Research</h2>
         </div>
 
         <div class="exp-list">
 
             <div class="exp-item fade-in">
                 <div class="exp-meta">
-                    <p class="exp-period">Jan 2026 –<br>Feb 2026</p>
+                    <p class="exp-period">Jan 2026 &ndash;<br>Mar 2026</p>
                     <p class="exp-org">Vizuara AI Labs</p>
                 </div>
                 <div class="exp-body">
-                    <h3 class="exp-role">AI Research Intern — Mechanistic Interpretability</h3>
+                    <h3 class="exp-role">AI Research Intern &mdash; Mechanistic Interpretability</h3>
                     <ul class="exp-points">
-                        <li>Led mechanistic interpretability study on representation entanglement in vision models using correlation analysis and linear probing across layers and neurons.</li>
-                        <li>Distinguished task-relevant features from implicitly encoded attributes; performed targeted ablations to quantify bias–utility trade-offs.</li>
-                        <li>Built reproducible representation analysis pipelines that became the basis of a publication.</li>
+                        <li>Investigated implicit demographic encoding in vision models using a multi-scale interpretability pipeline combining linear probing, filter-level correlation analysis, and representation geometry across ResNet and ViT architectures.</li>
+                        <li>Identified distributed subspace encoding of sensitive attributes and performed targeted filter ablations, reducing gender probing accuracy from 85% to 43% while preserving task performance.</li>
                     </ul>
                 </div>
             </div>
 
             <div class="exp-item fade-in">
                 <div class="exp-meta">
-                    <p class="exp-period">May 2025 –<br>Jul 2025</p>
-                    <p class="exp-org">Wadhwani School of AI, IIT Madras</p>
+                    <p class="exp-period">May 2025 &ndash;<br>Jul 2025</p>
+                    <p class="exp-org">Wadhwani School of AI,<br>IIT Madras</p>
                 </div>
                 <div class="exp-body">
-                    <h3 class="exp-role">AI Research Intern — Generative AI & RLHF</h3>
+                    <h3 class="exp-role">AI Intern &mdash; Generative AI & RLHF</h3>
                     <ul class="exp-points">
-                        <li>Developed soundscape music generation system using MusicGen trained on curated ambient datasets scraped from YouTube.</li>
-                        <li>Designed and deployed a web-based human feedback collection platform for evaluating 30-second generated audio clips.</li>
-                        <li>Applied RLHF to align generative outputs with human aesthetic and perceptual preferences.</li>
+                        <li>Developed an ambient soundscape music generation pipeline using MusicGen, training on a curated 10-hour dataset and building a web platform to collect structured human preference feedback.</li>
+                        <li>Applied Reinforcement Learning from Human Feedback (RLHF) to align generated audio with human aesthetic and perceptual preferences using reward modeling and preference-based optimization.</li>
                     </ul>
                 </div>
             </div>
 
             <div class="exp-item fade-in">
                 <div class="exp-meta">
-                    <p class="exp-period">Nov 2024 –<br>Mar 2025</p>
+                    <p class="exp-period">Nov 2024 &ndash;<br>Mar 2025</p>
                     <p class="exp-org">IIT Guwahati</p>
                 </div>
                 <div class="exp-body">
-                    <h3 class="exp-role">AI Research Intern — Multimodal Learning</h3>
+                    <h3 class="exp-role">AI Research Intern &mdash; Multimodal Learning</h3>
                     <ul class="exp-points">
                         <li>Built multimodal image captioning VLM using a pretrained ViT encoder and GPT-2/BERT decoder, trained on Flickr30k.</li>
                         <li>Applied Bottom-Up Top-Down attention for enhanced feature extraction, achieving measurable improvements in caption quality.</li>
@@ -562,14 +642,14 @@
 
             <div class="exp-item fade-in">
                 <div class="exp-meta">
-                    <p class="exp-period">Jun 2024 –<br>Aug 2024</p>
+                    <p class="exp-period">Jun 2024 &ndash;<br>Aug 2024</p>
                     <p class="exp-org">ProCohat Technologies</p>
                 </div>
                 <div class="exp-body">
                     <h3 class="exp-role">ML Engineering Intern</h3>
                     <ul class="exp-points">
-                        <li>Architected a MultiPDF RAG system with semantic search across 100+ documents; 85% retrieval accuracy with Supabase-backed vector storage.</li>
-                        <li>Deployed production pipeline via FastAPI serving 50+ daily queries at sub-2s latency.</li>
+                        <li>Architected a production MultiPDF RAG system with semantic chunking, embedding-based retrieval, and vector similarity search across 100+ documents, achieving 85% retrieval accuracy with Supabase pgvector storage.</li>
+                        <li>Deployed end-to-end ML inference pipeline serving 50+ daily queries with sub-2s latency using FastAPI.</li>
                     </ul>
                 </div>
             </div>
@@ -577,7 +657,7 @@
         </div>
     </section>
 
-    <!-- PROJECTS -->
+    <!-- ═══════════════════ PROJECTS ═══════════════════ -->
     <section id="projects">
         <div class="sec-header fade-in">
             <p class="sec-label">Selected Work</p>
@@ -587,15 +667,31 @@
         <div class="proj-grid">
 
             <div class="proj-card fade-in">
-                <h3 class="proj-title">AI-Powered Appointment Scheduling — Multi-Agent System</h3>
-                <p class="proj-desc">Multi-agent architecture with specialized agents for intent parsing, availability reasoning, and booking confirmation. Real-time slot validation, conflict resolution, and async email/SMS notifications.</p>
+                <h3 class="proj-title">Multimodal RAG over HuggingFace Courses</h3>
+                <p class="proj-desc">Full-stack multimodal RAG system over 8 HuggingFace courses (2,200+ chunks) using BGE-small text and CLIP image embeddings in Qdrant. Streaming inference with FastAPI SSE and Gemini 2.5 Flash / Llama 3.3 70B fallback.</p>
                 <div class="proj-tags">
-                    <span class="proj-tag">LangChain</span>
+                    <span class="proj-tag">RAG</span>
+                    <span class="proj-tag">CLIP</span>
+                    <span class="proj-tag">Qdrant</span>
+                    <span class="proj-tag">FastAPI</span>
+                    <span class="proj-tag">Next.js</span>
+                </div>
+                <a href="https://github.com/mansh7763/multimodal-rag" class="proj-link" target="_blank">
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
+                    GitHub
+                </a>
+            </div>
+
+            <div class="proj-card fade-in">
+                <h3 class="proj-title">Healthcare Appointment Scheduling &mdash; Multi-Agent System</h3>
+                <p class="proj-desc">LangGraph-based multi-agent workflow with specialized agents for intent parsing, doctor availability retrieval, and appointment booking. Real-time slot validation, conflict resolution, and async email/SMS notifications.</p>
+                <div class="proj-tags">
                     <span class="proj-tag">LangGraph</span>
                     <span class="proj-tag">Multi-Agent</span>
                     <span class="proj-tag">NLP</span>
+                    <span class="proj-tag">FastAPI</span>
                 </div>
-                <a href="https://github.com/mansh7763" class="proj-link" target="_blank">
+                <a href="https://github.com/mansh7763/MultiAgent-Appointment-Scheduling-Agent.git" class="proj-link" target="_blank">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
                     GitHub
                 </a>
@@ -603,14 +699,14 @@
 
             <div class="proj-card fade-in">
                 <h3 class="proj-title">Sankshipt: Multilingual News Summarization</h3>
-                <p class="proj-desc">Transformer-based summarization pipeline for 10 Indian languages with language detection, normalization, and entity preservation for cross-lingual topic coverage.</p>
+                <p class="proj-desc">Transformer-based summarization pipeline for 10 Indian languages with language detection, cross-lingual normalization, and entity-aware summarization preserving key events and names.</p>
                 <div class="proj-tags">
-                    <span class="proj-tag">mBART</span>
                     <span class="proj-tag">Transformers</span>
                     <span class="proj-tag">Multilingual NLP</span>
                     <span class="proj-tag">Flask</span>
+                    <span class="proj-tag">10 Languages</span>
                 </div>
-                <a href="https://github.com/mansh7763" class="proj-link" target="_blank">
+                <a href="https://github.com/mansh7763/Sankshipt" class="proj-link" target="_blank">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
                     GitHub
                 </a>
@@ -618,22 +714,22 @@
 
             <div class="proj-card fade-in">
                 <h3 class="proj-title">Multi-Label Sentiment Analysis</h3>
-                <p class="proj-desc">9-label multi-label sentiment classifier using DistilBERT for overlapping emotional categories in user-generated text. Mitigated severe class imbalance via weighted loss — 88% accuracy.</p>
+                <p class="proj-desc">9-label sentiment classifier using DistilBERT for overlapping emotional categories. Addressed severe class imbalance via weighted binary cross-entropy and threshold tuning, achieving 88% accuracy.</p>
                 <div class="proj-tags">
                     <span class="proj-tag">DistilBERT</span>
                     <span class="proj-tag">PyTorch</span>
                     <span class="proj-tag">Multi-Label</span>
                     <span class="proj-tag">Class Imbalance</span>
                 </div>
-                <a href="https://github.com/mansh7763" class="proj-link" target="_blank">
+                <a href="https://github.com/mansh7763/Multi-Label-Text-Classification" class="proj-link" target="_blank">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>
                     GitHub
                 </a>
             </div>
 
             <div class="proj-card fade-in">
-                <h3 class="proj-title">NanoVLM — Tiny Vision-Language Model</h3>
-                <p class="proj-desc">ViT encoder + GPT-2 decoder VLM family achieving coherent image captioning at 10× smaller scale. Includes curated alignment datasets and new evaluation criteria for caption quality.</p>
+                <h3 class="proj-title">NanoVLM &mdash; Tiny Vision-Language Model</h3>
+                <p class="proj-desc">ViT encoder + GPT-2 decoder VLM family achieving coherent image captioning at 10x smaller scale. Includes curated alignment datasets and novel evaluation criteria for caption quality.</p>
                 <div class="proj-tags">
                     <span class="proj-tag">ViT</span>
                     <span class="proj-tag">GPT-2</span>
@@ -649,7 +745,7 @@
         </div>
     </section>
 
-    <!-- SKILLS -->
+    <!-- ═══════════════════ SKILLS ═══════════════════ -->
     <section id="skills">
         <div class="sec-header fade-in">
             <p class="sec-label">Technical</p>
@@ -664,24 +760,28 @@
                     <span class="skill-item">Computer Vision</span>
                     <span class="skill-item">Multimodal Learning</span>
                     <span class="skill-item">Generative AI</span>
+                    <span class="skill-item">LLMs</span>
                     <span class="skill-item">RLHF</span>
                     <span class="skill-item">RAG Systems</span>
                     <span class="skill-item">Mechanistic Interpretability</span>
                     <span class="skill-item">Low-Resource NLP</span>
-                    <span class="skill-item">Representation Geometry</span>
+                    <span class="skill-item">Fine-Tuning (LoRA/PEFT)</span>
+                    <span class="skill-item">Prompt Engineering</span>
+                    <span class="skill-item">TTS/STT</span>
                 </div>
             </div>
             <div class="skill-group">
-                <p class="skill-group-title">Frameworks & Tools</p>
+                <p class="skill-group-title">Frameworks & Libraries</p>
                 <div class="skill-items">
                     <span class="skill-item">PyTorch</span>
                     <span class="skill-item">TensorFlow</span>
-                    <span class="skill-item">HuggingFace</span>
+                    <span class="skill-item">HuggingFace Transformers</span>
+                    <span class="skill-item">Sentence-Transformers</span>
                     <span class="skill-item">LangChain</span>
                     <span class="skill-item">LangGraph</span>
-                    <span class="skill-item">FastAPI</span>
-                    <span class="skill-item">Flask</span>
-                    <span class="skill-item">Docker</span>
+                    <span class="skill-item">scikit-learn</span>
+                    <span class="skill-item">Pandas</span>
+                    <span class="skill-item">NumPy</span>
                 </div>
             </div>
             <div class="skill-group">
@@ -694,21 +794,24 @@
                 </div>
             </div>
             <div class="skill-group">
-                <p class="skill-group-title">Core Coursework</p>
+                <p class="skill-group-title">Tools & Infrastructure</p>
                 <div class="skill-items">
-                    <span class="skill-item">Linear Algebra</span>
-                    <span class="skill-item">Probability & Statistics</span>
-                    <span class="skill-item">Machine Learning</span>
-                    <span class="skill-item">NLP</span>
-                    <span class="skill-item">Reinforcement Learning</span>
-                    <span class="skill-item">CUDA Programming</span>
-                    <span class="skill-item">DSA</span>
+                    <span class="skill-item">Docker</span>
+                    <span class="skill-item">Git</span>
+                    <span class="skill-item">FastAPI</span>
+                    <span class="skill-item">Flask</span>
+                    <span class="skill-item">Qdrant</span>
+                    <span class="skill-item">Supabase</span>
+                    <span class="skill-item">AWS</span>
+                    <span class="skill-item">Vercel</span>
+                    <span class="skill-item">HuggingFace Spaces</span>
+                    <span class="skill-item">Weights & Biases</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- AWARDS -->
+    <!-- ═══════════════════ AWARDS ═══════════════════ -->
     <section id="awards">
         <div class="sec-header fade-in">
             <p class="sec-label">Recognition</p>
@@ -720,14 +823,14 @@
                 <div class="award-org">AI Hackathon<br>Jagriti, IIT BHU</div>
                 <div>
                     <p class="award-title">2nd Runner-up</p>
-                    <p class="award-desc">Built Multi-label Sentiment Analysis system · Competed against 700+ teams</p>
+                    <p class="award-desc">Built Multi-label Sentiment Analysis system &middot; 700+ teams</p>
                 </div>
             </div>
             <div class="award-item fade-in">
                 <div class="award-org">Enigma CTF<br>Codefest, IIT BHU</div>
                 <div>
                     <p class="award-title">2nd Runner-up</p>
-                    <p class="award-desc">Competed against 1,600+ teams</p>
+                    <p class="award-desc">1,600+ teams</p>
                 </div>
             </div>
             <div class="award-item fade-in">
@@ -761,7 +864,30 @@
         </div>
     </section>
 
-    <!-- CONTACT -->
+    <!-- ═══════════════════ RESUME ═══════════════════ -->
+    <section id="resume" class="resume-section">
+        <div class="sec-header fade-in">
+            <p class="sec-label">Download</p>
+            <h2 class="sec-title">Resume</h2>
+        </div>
+
+        <div class="resume-actions fade-in">
+            <a href="HimanshuKumar-Resume-12-03.pdf" download class="resume-btn resume-btn-primary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download PDF
+            </a>
+            <a href="HimanshuKumar-Resume-12-03.pdf" target="_blank" class="resume-btn resume-btn-secondary">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+                Open in New Tab
+            </a>
+        </div>
+
+        <div class="fade-in">
+            <iframe src="HimanshuKumar-Resume-12-03.pdf" class="resume-embed" title="Himanshu Kumar Resume"></iframe>
+        </div>
+    </section>
+
+    <!-- ═══════════════════ CONTACT ═══════════════════ -->
     <section id="contact">
         <div class="sec-header fade-in">
             <p class="sec-label">Get in touch</p>
@@ -771,7 +897,7 @@
         <div class="contact-grid fade-in">
             <div>
                 <p class="contact-intro">
-                    Seeking ML Engineer, AI Researcher, or Data Scientist roles starting May 2025. Open to research collaborations and interesting problems at the frontier of AI.
+                    Seeking ML Engineer, AI Researcher, or Data Scientist roles. Open to research collaborations and interesting problems at the frontier of AI.
                 </p>
                 <div class="contact-links">
                     <a href="mailto:himanshukumariiitn@gmail.com" class="contact-link">
@@ -793,11 +919,12 @@
                 </div>
             </div>
             <div class="research-focus">
-                <p class="rf-title">Current Research Interests</p>
+                <p class="rf-title">What I Work On</p>
                 <div class="rf-items">
-                    <p class="rf-item">Mechanistic Interpretability of vision & language models</p>
-                    <p class="rf-item">Representation geometry and feature disentanglement</p>
-                    <p class="rf-item">Low-resource and code-mixed multilingual NLP</p>
+                    <p class="rf-item">Production RAG & multi-agent systems</p>
+                    <p class="rf-item">LLM fine-tuning & deployment pipelines</p>
+                    <p class="rf-item">Mechanistic interpretability of vision & language models</p>
+                    <p class="rf-item">Multilingual & low-resource NLP</p>
                     <p class="rf-item">Efficient vision-language model architectures</p>
                     <p class="rf-item">RLHF and human preference alignment</p>
                 </div>
@@ -808,7 +935,9 @@
 </main>
 
 <footer>
-    <p>© 2025 Himanshu Kumar · IIIT Nagpur</p>
+    <p>&copy; 2025 Himanshu Kumar &middot; IIIT Nagpur &middot;
+        <a href="mailto:himanshukumariiitn@gmail.com">himanshukumariiitn@gmail.com</a>
+    </p>
 </footer>
 
 <script>
@@ -816,13 +945,26 @@
     const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry, i) => {
             if (entry.isIntersecting) {
-                setTimeout(() => entry.target.classList.add('visible'), i * 80);
+                setTimeout(() => entry.target.classList.add('visible'), i * 60);
                 observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.08 });
 
     document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+    // Nav shadow on scroll
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 10);
+    });
+
+    // Close mobile menu on link click
+    document.querySelectorAll('.nav-links a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.querySelector('.nav-links').classList.remove('open');
+        });
+    });
 </script>
 
 </body>
