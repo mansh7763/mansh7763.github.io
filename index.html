@@ -118,11 +118,11 @@
         }
         .hero-name {
             font-family: var(--serif); font-size: 2.8rem; font-weight: 600;
-            line-height: 1.12; color: var(--ink); margin-bottom: 0.4rem;
+            line-height: 1.12; color: var(--ink); margin-bottom: 0.3rem;
         }
         .hero-title {
             font-family: var(--serif); font-style: italic; font-size: 1.05rem;
-            color: var(--ink-3); margin-bottom: 1.6rem;
+            color: var(--ink-3); margin-bottom: 0;
         }
         .hero-bio {
             font-size: 0.95rem; color: var(--ink-2); line-height: 1.75;
@@ -143,14 +143,17 @@
             background: var(--accent-pale);
         }
 
+        .hero-intro {
+            display: flex; align-items: center; gap: 1.4rem; margin-bottom: 1.2rem;
+        }
         .hero-photo {
-            width: 150px; height: 150px;
+            width: 110px; height: 110px;
             border-radius: 50%;
             object-fit: cover;
             object-position: center top;
             border: 3px solid var(--paper-3);
             box-shadow: var(--shadow-md);
-            margin-bottom: 1.2rem;
+            flex-shrink: 0;
         }
 
         .quick-stat {
@@ -404,6 +407,8 @@
             main { padding: 0 1.2rem; }
             #hero { grid-template-columns: 1fr; gap: 2rem; padding-top: 7rem; }
             .hero-name { font-size: 2rem; }
+            .hero-photo { width: 85px; height: 85px; }
+            .hero-intro { gap: 1rem; }
             .hero-bio { max-width: none; }
             .pub-card { grid-template-columns: 1fr; }
             .pub-year { margin-bottom: 0.3rem; }
@@ -454,8 +459,13 @@
     <section id="hero">
         <div class="hero-left">
             <p class="hero-label">ML Engineer & AI Researcher</p>
-            <h1 class="hero-name">Himanshu Kumar</h1>
-            <p class="hero-title">Final-year CS student, IIIT Nagpur</p>
+            <div class="hero-intro">
+                <img src="profile.png" alt="Himanshu Kumar" class="hero-photo">
+                <div>
+                    <h1 class="hero-name">Himanshu Kumar</h1>
+                    <p class="hero-title">Final-year CS student, IIIT Nagpur</p>
+                </div>
+            </div>
             <p class="hero-bio">
                 I build and deploy end-to-end ML systems &mdash; from production RAG pipelines and multi-agent architectures to fine-tuned LLMs and vision-language models. My work spans applied engineering (FastAPI, vector databases, LangGraph) and research (published at AAAI 2026), bridging the gap between model development and real-world deployment.
             </p>
@@ -470,7 +480,6 @@
             </div>
         </div>
         <div class="hero-right">
-            <img src="profile.png" alt="Himanshu Kumar" class="hero-photo">
             <div class="quick-stat">
                 <div class="stat-row">
                     <span class="stat-key">Institution</span>
